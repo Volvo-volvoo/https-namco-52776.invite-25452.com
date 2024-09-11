@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #D2691E; /* Chocolat */
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 20px; /* Déplacer la section en haut */
+            background-color: #8B4513;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .info {
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-photo {
+            width: 70px; /* Taille légèrement agrandie */
+            height: 70px;
+            border-radius: 50%;
+            background-color: #FFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-photo span {
+            color: #8B4513;
+            font-size: 20px; /* Taille de texte légèrement plus grande */
+            font-weight: bold;
+        }
+
+        .balance-section {
+            margin-top: 30px;
+            background-color: #8B4513;
+            padding: 15px;
+            border-radius: 10px;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .balance-section div {
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .actions-section {
+            margin-top: 30px;
+            background-color: #8B4513;
+            padding: 15px;
+            border-radius: 10px;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .actions-section button {
+            background-color: #FFD700;
+            color: #8B4513;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .actions-section button:hover {
+            background-color: #FFF;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Mon Compte</h2>
+
+        <!-- Section pour la photo ronde à gauche et l'identifiant à droite -->
+        <div class="profile-section">
+            <div class="profile-photo">
+                <span id="photo-code"></span>
+            </div>
+            <div id="account-info" class="info"></div>
+        </div>
+    </div>
+
+    <!-- Section des soldes en dehors de la section principale -->
+    <div class="balance-section">
+        <div>Solde principal : 00 XOF</div>
+        <div>Solde de dépôt : 00 XOF</div>
+        <div>Solde de retrait : 00 XOF</div>
+    </div>
+
+    <!-- Nouvelle section des actions avec des boutons -->
+    <div class="actions-section">
+        <button onclick="location.href='depot.html';">Recharge</button>
+        <button onclick="location.href='historique-recharge.html';">Historique de dépôt</button>
+        <button onclick="location.href='historique-retrait.html';">Historique de retrait</button>
+        <button onclick="location.href='retrait.html';">Retrait</button>
+        <button onclick="location.href='compte-retrait.html';">Compte de retrait</button>
+        <button onclick="location.href='carte_bancaire.html';">Ma carte</button>
+        <button onclick="location.href='service-client.html';">Service client</button>
+        <button onclick="location.href='parrainage.html';">parrainage</button>
+    </div>
+
+    <script>
+        // Récupérer les informations stockées dans le localStorage
+        var storedPhone = localStorage.getItem("phone");
+
+        // Vérifier si l'information est disponible
+        if (storedPhone) {
+            // Afficher l'identifiant de l'utilisateur
+            document.getElementById("account-info").innerHTML = 
+                "Identifiant : " + storedPhone;
+            
+            // Générer une image de profil à partir de l'identifiant (ex. les 3 derniers chiffres du téléphone)
+            var lastDigits = storedPhone.slice(-3);
+            document.getElementById("photo-code").textContent = lastDigits;
+        } else {
+            document.getElementById("account-info").innerHTML = 
+                "Aucune information trouvée.";
+        }
+    </script>
+
+</body>
+</html>

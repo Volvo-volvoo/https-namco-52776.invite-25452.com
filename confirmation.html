@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Confirmation de Paiement</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .info {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+        input {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        button {
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Confirmation de Paiement</h2>
+    <div class="info">
+        <p>Numéro de Paiement Sélectionné: <strong id="paymentNumber"></strong></p>
+        <button id="copyNumber">Copier le Numéro de Paiement</button>
+    </div>
+    <form id="confirmationForm">
+        <input type="text" id="paymentInput" name="paymentInput" placeholder="Entrez le numéro de paiement" required>
+        <input type="text" id="transactionId" name="transactionId" placeholder="ID de Transaction" required>
+        <button type="submit">validé </button>
+    </form>
+</div>
+
+<script>
+    // Récupérer les paramètres de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const amount = urlParams.get('amount');
+    const paymentMethod = urlParams.get('paymentMethod');
+    const paymentNumber = decodeURIComponent(urlParams.get('number'));
+
+    document.getElementById('paymentNumber').textContent = paymentNumber;
+    document.getElementById('paymentInput').value = paymentNumber;
+
+    document.getElementById('copyNumber').onclick = function() {
+        navigator.clipboard.writeText(paymentNumber).then(function() {
+            alert('Numéro de paiement copié dans le presse-papiers.');
+        });
+    };
+
+    document.getElementById('confirmationForm').onsubmit = function(event) {
+        event.preventDefault();
+
+        var enteredPaymentNumber = document.getElementById('paymentInput').value;
+        var transactionId = document.getElementById('transactionId').value;
+
+        // Ajouter les informations de recharge à l'historique des recharges
+        var rechargeHistory = JSON.parse(localStorage.getItem('rechargeHistory')) || [];
+        rechargeHistory.push({
+            amount: amount,
+            paymentMethod: paymentMethod,
+            paymentNumber: enteredPaymentNumber,
+            transactionId: transactionId,
+            date: new Date().toLocaleString(),
+            status: 'En attente'
+        });
+        localStorage.setItem('rechargeHistory', JSON.stringify(rechargeHistory));
+
+        alert('Votre paiement a été confirmé. Merci !');
+
+        // Rediriger vers la page d'historique des recharges
+        window.location.href = 'historique-recharge.html';
+    };
+
+    // Réinitialiser le champ après 14 minutes
+    setTimeout(function() {
+        document.getElementById('paymentInput').value = '';
+        document.getElementById('transactionId').value = '';
+        alert('Les champs ont été réinitialisés après 14 minutes.');
+    }, 14 * 60 * 1000); // 14 minutes en millisecondes
+</script>
+
+</body>
+</html>

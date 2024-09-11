@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de produits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .chocolat-section {
+            background-color: #D2691E; /* Couleur chocolat */
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .section-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .section-content div {
+            flex: 1;
+        }
+
+        .separator {
+            border: 0;
+            border-top: 2px solid #fff; /* Ligne blanche pour la séparation */
+            margin: 10px 0;
+        }
+
+        .no-products {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Mon Produits</h1>
+
+        <!-- Section Chocolat -->
+        <div class="chocolat-section">
+            <div class="section-content">
+                <div class="revenus">
+                    Revenus quotidienne: 00 XOF
+                </div>
+                <div class="separator"></div>
+                <div class="commission">
+                    Commission: 00 XOF
+                </div>
+            </div>
+        </div>
+
+        <!-- Texte en bas de la section Chocolat -->
+        <div class="no-products">
+            Pas de produits
+        </div>
+    </div>
+
+</body>
+</html>

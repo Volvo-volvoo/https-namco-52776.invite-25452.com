@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des Retraits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #17a2b8;
+            color: white;
+        }
+        .withdrawal-section {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .pending {
+            color: #ffc107;
+        }
+        .approved {
+            color: #28a745;
+        }
+        .rejected {
+            color: #dc3545;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button.delete {
+            background-color: #dc3545;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Historique des Retraits</h1>
+
+    <div id="historyContainer">
+        <!-- Les informations sur chaque retrait seront affichées ici -->
+    </div>
+
+    <script>
+        let withdrawals = JSON.parse(localStorage.getItem('withdrawals')) || [];
+
+        function renderWithdrawals() {
+            const container = document.getElementById('historyContainer');
+            container.innerHTML = '';
+
+            withdrawals.forEach((withdrawal, index) => {
+                const statusClass = withdrawal.status === "Approuvé" ? "approved" : 
+                                   withdrawal.status === "Rejeté" ? "rejected" : "pending";
+
+                const withdrawalSection = document.createElement('div');
+                withdrawalSection.className = 'withdrawal-section';
+
+                withdrawalSection.innerHTML = `
+                    <p>Montant : ${withdrawal.amount} FCFA</p>
+                    <p>Date : ${withdrawal.date}</p>
+                    <p>Statut : <span class="${statusClass}">${withdrawal.status}</span></p>
+                    <button class="delete" onclick="deleteWithdrawal(${index})">Supprimer</button>
+                `;
+
+                container.appendChild(withdrawalSection);
+            });
+        }
+
+        function deleteWithdrawal(index) {
+            if (confirm("Voulez-vous vraiment supprimer cet historique de retrait ?")) {
+                withdrawals.splice(index, 1);
+                localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
+                renderWithdrawals();
+                alert('Historique de retrait supprimé avec succès.');
+            }
+        }
+
+        renderWithdrawals();
+    </script>
+</body>
+</html>

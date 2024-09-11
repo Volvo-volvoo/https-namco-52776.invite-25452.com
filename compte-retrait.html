@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Portefeuille</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .card-button {
+            background-color: #2196F3;
+            margin-top: 20px;
+        }
+        .card-button:hover {
+            background-color: #1e88e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>compte de retrait</h2>
+        <p>veuillez lié votre portefeuille attentivement avant de demander un retrait </p>
+        <form id="withdrawalForm">
+            <div class="form-group">
+                <label for="accountNumber">Numéro du compte</label>
+                <input type="text" id="accountNumber" name="accountNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="operator">Opérateur</label>
+                <select id="operator" name="operator" required>
+                    <option value="" disabled selected>Choisissez un opérateur</option>
+                    <option value="MTN">MTN</option>
+                    <option value="Moov">Moov</option>
+                    <option value="WAVE">WAVE</option>
+                    <option value="Orange">Orange</option>
+                    <option value="USDT">USDT</option>
+                </select>
+                
+            </div>
+            <div class="form-group">
+                <label for="withdrawalPassword">Mode de passe de retrait</label>
+                <input type="password" id="withdrawalPassword" name="withdrawalPassword" required>
+            </div>
+            <button type="submit">Soumettre</button>
+            <button type="button" class="card-button" onclick="window.location.href='carte_bancaire.html'">Ma carte bancaire</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('withdrawalForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Get form data
+            const accountNumber = document.getElementById('accountNumber').value;
+            const operator = document.getElementById('operator').value;
+            const withdrawalPassword = document.getElementById('withdrawalPassword').value;
+            
+            // Store data in localStorage
+            localStorage.setItem('accountNumber', accountNumber);
+            localStorage.setItem('operator', operator);
+            localStorage.setItem('withdrawalPassword', withdrawalPassword);
+            
+            // Optionally show confirmation to the user
+            alert('Informations enregistrées avec succès.');
+        });
+    </script>
+</body>
+</html>

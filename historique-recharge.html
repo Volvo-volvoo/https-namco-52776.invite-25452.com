@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Historique des Recharges</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .history-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .history-item p {
+            margin: 5px 0;
+        }
+        .action-button {
+            background-color: #ff5733;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .action-button:hover {
+            background-color: #e04c2f;
+        }
+        .clear-button {
+            background-color: #dc3545;
+        }
+        .clear-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Historique des Recharges</h2>
+    <div id="rechargeHistoryContainer">
+        <!-- Les éléments d'historique seront ajoutés dynamiquement avec JavaScript -->
+    </div>
+    <button id="clearHistory" class="action-button clear-button">Supprimer Tout l'Historique</button>
+</div>
+
+<script>
+    function loadRechargeHistory() {
+        var rechargeHistory = JSON.parse(localStorage.getItem('rechargeHistory')) || [];
+        var container = document.getElementById('rechargeHistoryContainer');
+
+        // Vider le conteneur avant de le remplir
+        container.innerHTML = '';
+
+        rechargeHistory.forEach(function(record, index) {
+            var item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerHTML = `
+                <p><strong>Montant :</strong> ${record.amount} FCFA</p>
+                <p><strong>Mode de Paiement :</strong> ${record.paymentMethod}</p>
+                <p><strong>Numéro de Paiement :</strong> ${record.paymentNumber}</p>
+                <p><strong>ID de Transaction :</strong> ${record.transactionId}</p>
+                <p><strong>Date :</strong> ${record.date}</p>
+                <p><strong>Statut :</strong> ${record.status}</p>
+                <button class="action-button" onclick="deleteRecord(${index})">Supprimer</button>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function deleteRecord(index) {
+        var rechargeHistory = JSON.parse(localStorage.getItem('rechargeHistory')) || [];
+        rechargeHistory.splice(index, 1); // Supprimer l'enregistrement à l'index spécifié
+        localStorage.setItem('rechargeHistory', JSON.stringify(rechargeHistory));
+        loadRechargeHistory(); // Recharger l'historique après suppression
+    }
+
+    function clearAllHistory() {
+        localStorage.removeItem('rechargeHistory');
+        loadRechargeHistory(); // Recharger l'historique après suppression
+    }
+
+    document.getElementById('clearHistory').onclick = clearAllHistory;
+
+    // Charger l'historique des recharges au chargement de la page
+    loadRechargeHistory();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+ <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NAMCO</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #D2691E; /* Chocolat */
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #8B4513;
+            padding: 10px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Georgia', serif; /* Jolie police pour NAMCO */
+            font-size: 36px;
+            margin: 0;
+            padding: 10px 0;
+            letter-spacing: 3px;
+        }
+
+        /* Section des transactions récentes */
+        .recent-transactions {
+            background-color: #8B4513;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            height: 200px; /* Ajusté pour afficher 4 transactions */
+            overflow: hidden; /* Masquer le contenu qui déborde */
+        }
+
+        .recent-transactions h2 {
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .transaction {
+            font-size: 16px;
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #D2B48C;
+            border-radius: 5px;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+        /* Animation du défilement */
+        @keyframes scrollUp {
+            0% { transform: translateY(100%); opacity: 0; }
+            10% { transform: translateY(0); opacity: 1; }
+            90% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100%); opacity: 0; }
+        }
+
+        .visible {
+            animation: scrollUp 3s ease-in-out infinite;
+        }
+
+        /* Pied de page avec les boutons */
+        footer {
+            background-color: #8B4513;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        footer button {
+            background-color: #D2B48C;
+            color: #8B4513;
+            border: none;
+            border-radius: 50px; /* Boutons plus arrondis */
+            padding: 15px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            min-width: 80px; /* Taille minimum pour uniformité */
+        }
+
+        footer button:hover {
+            background-color: #F5DEB3; /* Couleur plus claire au survol */
+            transform: translateY(-3px); /* Effet de surélévation au survol */
+        }
+
+        footer button:active {
+            background-color: #8B4513; /* Couleur plus foncée lorsque le bouton est pressé */
+            color: white;
+            transform: translateY(0);
+        }
+        
+        .transaction span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Section NAMCO -->
+    <div class="container">
+        <h1>NAMCO</h1>
+    </div>
+
+    <!-- Section des transactions récentes -->
+    <div class="recent-transactions">
+        <h2>Transactions récentes</h2>
+        <div id="transaction-container">
+            <!-- Les transactions dynamiques sont affichées ici -->
+            <div class="transaction"><span>Numéro</span> a rechargé Montant FCFA</div>
+            <div class="transaction"><span>Numéro</span> a retiré Montant FCFA</div>
+            <div class="transaction"><span>Numéro</span> a rechargé Montant FCFA</div>
+            <div class="transaction"><span>Numéro</span> a retiré Montant FCFA</div>
+        </div>
+    </div>
+    <h5>
+     <div class="container">
+        <h4>Concernant les problèmes de mot de passe oublié, veuillez noter que nous n'avons pas de processus automatisé pour la récupération. Si vous avez oublié votre mot de passe, merci de me contacter directement avec votre identifiant. Votre identifiant doit être votre numéro WhatsApp, accompagné de preuves de paiement. Sans ces informations, je ne pourrai malheureusement pas vous aider.</h1>
+    </div>
+    
+
+    <!-- Pied de page avec les boutons -->
+    <footer>
+        <button onclick="window.location.href='#'">Accueil</button>
+        <button onclick="window.location.href='investir.html'">Investir</button>
+        <button onclick="window.location.href='produits.html'">Produits</button>
+        <button onclick="window.location.href='mon-compte.html'">Compte</button>
+    </footer>
+
+    <script>
+        // Liste de 30 numéros de téléphone
+        const phoneNumbers = [
+            '05********', '07********', '05***********', '05********', '07********', '07**********', '01*********',
+            '07*********', '05******', '05***********', '07********', '07*******""', '01**********', '05*******',
+            '01******', '01********', '05*********', '05********', '01*******', '07*******', '01*******',
+            '05********', '07********', '01********', '07*********', '05********', '01*******', '05*********',
+            '01*******', '05*******'
+        ];
+
+        // Liste de 30 montants
+        const amounts = [
+            '10,000 FCFA', '15,000 FCFA', '20,000 FCFA', '25,000 FCFA', '30,000 FCFA', '35,000 FCFA', '40,000 FCFA',
+            '45,000 FCFA', '50,000 FCFA', '55,000 FCFA', '60,000 FCFA', '65,000 FCFA', '70,000 FCFA', '75,000 FCFA',
+            '80,000 FCFA', '85,000 FCFA', '90,000 FCFA', '95,000 FCFA', '100,000 FCFA', '110,000 FCFA', '120,000 FCFA',
+            '130,000 FCFA', '140,000 FCFA', '150,000 FCFA', '160,000 FCFA', '170,000 FCFA', '180,000 FCFA',
+            '190,000 FCFA', '200,000 FCFA', '220,000 FCFA'
+                    ];
+
+        const transactionContainer = document.getElementById('transaction-container');
+        const transactionElements = transactionContainer.children;
+
+        let index = 0;
+        function scrollTransactions() {
+            // Cache toutes les transactions
+            for (let i = 0; i < transactionElements.length; i++) {
+                transactionElements[i].classList.remove('visible');
+            }
+
+            // Génère de nouveaux numéros et montants pour les 4 transactions
+            for (let i = 0; i < 4; i++) {
+                const currentIndex = (index + i) % phoneNumbers.length;
+                const phoneNumber = phoneNumbers[Math.floor(Math.random() * phoneNumbers.length)];
+                const amount = amounts[Math.floor(Math.random() * amounts.length)];
+
+                // Choix aléatoire entre "rechargé" et "retiré"
+                const action = Math.random() < 0.5 ? 'a rechargé' : 'a retiré';
+
+                // Mettre à jour la transaction avec les nouvelles valeurs
+                transactionElements[i].innerHTML = `<span>${phoneNumber}</span> ${action} ${amount}`;
+
+                // Afficher la transaction
+                transactionElements[i].classList.add('visible');
+            }
+
+            // Incrémente l'index pour le prochain groupe de transactions
+            index = (index + 4) % phoneNumbers.length;
+        }
+
+        // Faire défiler les transactions toutes les 3 secondes
+        setInterval(scrollTransactions, 3000);
+    </script>
+
+</body>
+</html>

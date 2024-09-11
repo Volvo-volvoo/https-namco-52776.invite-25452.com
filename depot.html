@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Recharge</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .info {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 16px;
+            color: #555;
+        }
+        input {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        select {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        button {
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Paiement sur NAMCO</h2>
+    <div class="info">
+        Solde de Dépôt: <strong>00 FCFA</strong>
+    </div>
+    <form id="rechargeForm">
+        <input type="number" id="amount" name="amount" placeholder="Montant à recharger" min="8000" required>
+        <select id="paymentMethod" name="paymentMethod" required>
+            <option value="">Veuillez choisir un mode de paiement</option>
+            <option value="mtn">MTN</option>
+            <option value="moov">Moov</option>
+            <option value="orange">Orange</option>
+            <option value="wave">WAVE</option>
+            <option value="usd">USD</option>
+        </select>
+        <button type="submit">Déposez Maintenant</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('rechargeForm').onsubmit = function(event) {
+        event.preventDefault();
+        var paymentMethod = document.getElementById('paymentMethod').value;
+        var amount = document.getElementById('amount').value;
+        var paymentDetails = {
+            mtn: '+225 0554049897',
+            moov: '0140719995',
+            orange: '0703037591',
+            wave: '0703037591',
+            usd: '0x5d08ae8cdd4EF3787f95b8570793eAd23B83E0cC'
+        };
+        
+        var selectedNumber = paymentDetails[paymentMethod];
+        if (selectedNumber) {
+            window.location.href = `confirmation.html?amount=${amount}&paymentMethod=${paymentMethod}&number=${encodeURIComponent(selectedNumber)}`;
+        }
+    };
+</script>
+
+</body>
+</html>

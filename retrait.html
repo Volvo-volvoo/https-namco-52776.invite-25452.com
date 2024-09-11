@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Retrait des Fonds</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #17a2b8;
+            color: white;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #17a2b8;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+        .success {
+            color: green;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Retrait des Fonds</h1>
+             <h4>minimum de retrait 1,100 FCFA vous pouvez effectuer votre retrait de 9h10 a 21h10</h5>
+
+    <div class="form-container">
+        <label for="amount">Montant à retirer</label>
+        <input type="number" id="amount" placeholder="Montant à retirer">
+
+        <label for="password">Mode de passe de retrait</label>
+        <input type="password" id="password" placeholder="Mode de passe de retrait">
+
+        <button onclick="submitWithdrawal()">Soumettre</button>
+
+        <p id="message" class="error"></p>
+    </div>
+
+    <script>
+        let withdrawals = JSON.parse(localStorage.getItem('withdrawals')) || [];
+        let currentBalance = 50;  // Par exemple, ton solde actuel est de 50 FCFA.
+
+        function submitWithdrawal() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+
+            if (!amount || !password) {
+                messageElement.textContent = "Veuillez remplir tous les champs.";
+                return;
+            }
+
+            if (amount > currentBalance) {
+                // Solde insuffisant
+                messageElement.textContent = "Solde insuffisant.";
+                addWithdrawal(amount, "Rejeté");
+            } else {
+                // Retrait accepté
+                currentBalance -= amount;
+                messageElement.className = "success";
+                messageElement.textContent = "Retrait soumis avec succès.";
+                addWithdrawal(amount, "En attente");
+            }
+        }
+
+        function addWithdrawal(amount, status) {
+            const withdrawal = {
+                amount: amount,
+                date: new Date().toLocaleString(),
+                status: status
+            };
+            withdrawals.push(withdrawal);
+            localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
+        }
+    </script>
+</body>
+</html>
